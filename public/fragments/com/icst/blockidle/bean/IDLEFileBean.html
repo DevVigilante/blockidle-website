@@ -1,0 +1,43 @@
+
+<style>
+
+figure[data-rehype-pretty-code-figure] {
+  margin: 0;
+}
+
+pre {
+  padding: 16px;
+  border-radius: 8px;
+  overflow-x: auto;
+  margin: 0;
+}
+
+pre code {
+  display: block;
+  white-space: pre;
+}
+
+pre code span[data-line] {
+  display: block;
+  padding-left: 0;
+}
+
+h1,
+h2,
+h3 {
+  margin-top: 0.5em;
+}
+</style>
+<h1 id="idlefilebean" class="heading heading-h1"><a aria-hidden="true" tabindex="-1" href="#idlefilebean"><span class="icon icon-link"></span></a>IDLEFileBean</h1>
+<p>Represents a base file in the Block IDLE file system. This class serves as a base model for all
+file-like structures in the system and provides basic metadata such as the file name.</p>
+<p>This class implements <span>Serializable</span> to allow instances to be serialized and passed
+between components or stored persistently.</p>
+<h2 id="methods" class="heading heading-h2"><a aria-hidden="true" tabindex="-1" href="#methods"><span class="icon icon-link"></span></a>Methods</h2>
+<h3 id="getfiletype" class="heading heading-h3"><a aria-hidden="true" tabindex="-1" href="#getfiletype"><span class="icon icon-link"></span></a>getFileType</h3>
+<p>Returns the file type associated with this file.</p>
+<p>This method can be overridden by subclasses to provide specific file types.</p>
+<ul>
+<li><code>return</code>: the file type as a string, or an empty string if undefined</li>
+</ul>
+<figure data-rehype-pretty-code-figure=""><pre style="background-color:#24292e;color:#e1e4e8" tabindex="0" data-language="java" data-theme="github-dark"><code data-language="java" data-theme="github-dark" style="display:grid"><span data-line=""><span style="color:#B392F0">getFileType</span><span style="color:#E1E4E8">()</span></span></code></pre></figure>

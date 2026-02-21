@@ -1,0 +1,37 @@
+
+<style>
+
+figure[data-rehype-pretty-code-figure] {
+  margin: 0;
+}
+
+pre {
+  padding: 16px;
+  border-radius: 8px;
+  overflow-x: auto;
+  margin: 0;
+}
+
+pre code {
+  display: block;
+  white-space: pre;
+}
+
+pre code span[data-line] {
+  display: block;
+  padding-left: 0;
+}
+
+h1,
+h2,
+h3 {
+  margin-top: 0.5em;
+}
+</style>
+<h1 id="beansuidconstants" class="heading heading-h1"><a aria-hidden="true" tabindex="-1" href="#beansuidconstants"><span class="icon icon-link"></span></a>BeansUIDConstants</h1>
+<p>Contains <code>serialVersionUID</code> constants for bean classes to ensure
+serialization compatibility across different versions of those classes.</p>
+<p>These IDs are used during Java object serialization and deserialization
+to verify that the sender and receiver of a serialized object have loaded
+classes for that object that are compatible with respect to serialization.</p>
+<h2 id="methods" class="heading heading-h2"><a aria-hidden="true" tabindex="-1" href="#methods"><span class="icon icon-link"></span></a>Methods</h2>

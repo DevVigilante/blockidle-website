@@ -1,0 +1,332 @@
+
+<style>
+
+figure[data-rehype-pretty-code-figure] {
+  margin: 0;
+}
+
+pre {
+  padding: 16px;
+  border-radius: 8px;
+  overflow-x: auto;
+  margin: 0;
+}
+
+pre code {
+  display: block;
+  white-space: pre;
+}
+
+pre code span[data-line] {
+  display: block;
+  padding-left: 0;
+}
+
+h1,
+h2,
+h3 {
+  margin-top: 0.5em;
+}
+</style>
+<h1 id="variablebean" class="heading heading-h1"><a aria-hidden="true" tabindex="-1" href="#variablebean"><span class="icon icon-link"></span></a>VariableBean</h1>
+<p>Represents a variable definition within the system and supports cloning.</p>
+<p>The <code>VariableBean</code> class encapsulates metadata about a variable, including its access level
+and type (e.g., a regular variable or a layout-related variable like view binding).
+This class implements <span>CloneableBean</span> for deep copying and <span>Serializable</span> for object serialization.</p>
+<p>Access Modifiers:</p>
+<ul><li><a name="#ACCESS_MODIFIER_PRIVATE">ACCESS_MODIFIER_PRIVATE</a> \u2013 <code>private</code></li><li><a name="#ACCESS_MODIFIER_PROTECTED">ACCESS_MODIFIER_PROTECTED</a> \u2013 <code>protected</code></li><li><a name="#ACCESS_MODIFIER_PUBLIC">ACCESS_MODIFIER_PUBLIC</a> \u2013 <code>public</code></li></ul>
+<p>Variable Types:</p>
+<ul><li><a name="#VARIABLE">VARIABLE</a> \u2013 Standard variable</li><li><a name="#LAYOUT">LAYOUT</a> \u2013 Layout-based variable, e.g., view binding</li></ul>
+<h2 id="methods" class="heading heading-h2"><a aria-hidden="true" tabindex="-1" href="#methods"><span class="icon icon-link"></span></a>Methods</h2>
+<h3 id="getallmetadata" class="heading heading-h3"><a aria-hidden="true" tabindex="-1" href="#getallmetadata"><span class="icon icon-link"></span></a>getAllMetadata</h3>
+<p>Retrieves all metadata instances of the specified type from both <code>requiredVariables</code>
+and <code>beanManifest</code>.</p>
+<p>This method iterates through all required variables and extracts metadata of the given
+type. It also retrieves matching metadata from the <code>beanManifest</code>, if available. This
+ensures that the returned list includes all metadata of the specified type, collected from
+all relevant data sources within the object.</p>
+<p>The method handles <code>null</code> checks on <code>beanManifest</code> and its metadata collection
+to avoid <span>NullPointerException</span>, covering edge cases gracefully.</p>
+<ul>
+<li>
+<p><code>T</code>: <code>Unknown</code> — the type of metadata to retrieve; must extend <span>BeanMetadata</span></p>
+</li>
+<li>
+<p><code>classType</code>: <code>Class&lt;T&gt;</code> — the class object representing the metadata type to search for</p>
+</li>
+<li>
+<p><code>return</code>: a <code>ArrayList&lt;T extends &lt;LinkRef name=&quot;BeanMetadata&quot; /&gt;&gt;</code> of all metadata entries of the specified type, or an empty list if none found</p>
+</li>
+</ul>
+<figure data-rehype-pretty-code-figure=""><pre style="background-color:#24292e;color:#e1e4e8" tabindex="0" data-language="java" data-theme="github-dark"><code data-language="java" data-theme="github-dark" style="display:grid"><span data-line=""><span style="color:#B392F0">getAllMetadata</span><span style="color:#E1E4E8">(Class</span><span style="color:#F97583">&lt;</span><span style="color:#E1E4E8">T</span><span style="color:#F97583">&gt;</span><span style="color:#E1E4E8"> classType)</span></span></code></pre></figure>
+<h3 id="clonebean" class="heading heading-h3"><a aria-hidden="true" tabindex="-1" href="#clonebean"><span class="icon icon-link"></span></a>cloneBean</h3>
+<p>Creates a deep copy of this <code>VariableBean</code> instance.</p>
+<p>The method ensures that all primitive fields and mutable objects are duplicated properly
+to avoid shared references, thus preventing unintended side effects when modifying the cloned
+instance. Immutable or null-safe copies are made where applicable.</p>
+<p>Specifically:</p>
+<ul><li>Strings are copied using <code>new String(...)</code> to ensure new references.</li><li>Booleans and Integers are boxed from primitives to ensure clarity and immutability.</li><li><span>DatatypeBean</span> is cloned recursively using its <code>cloneBean()</code> method.</li><li><code>requiredVariables</code> are deeply cloned, with each <code>VariableBean</code> copied
+individually.</li><li><code>icon</code> byte array is copied using <code>System.arraycopy</code>.</li><li><code>variableTitles</code>, <code>variableValues</code>, and <code>inputType</code> are
+shallow-copied using <code>new HashMap&lt;&gt;(...)</code>.</li><li><code>beanManifest</code> is assigned directly (TODO indicates deep cloning is intended in
+the future).</li></ul>
+<ul>
+<li><code>return</code>: a new <code>VariableBean</code> instance with the same values and structure as this one</li>
+</ul>
+<figure data-rehype-pretty-code-figure=""><pre style="background-color:#24292e;color:#e1e4e8" tabindex="0" data-language="java" data-theme="github-dark"><code data-language="java" data-theme="github-dark" style="display:grid"><span data-line=""><span style="color:#B392F0">cloneBean</span><span style="color:#E1E4E8">()</span></span></code></pre></figure>
+<h3 id="getdefcode" class="heading heading-h3"><a aria-hidden="true" tabindex="-1" href="#getdefcode"><span class="icon icon-link"></span></a>getDefCode</h3>
+<p>Generates the Java source code representation for this <code>VariableBean</code>, including all
+required (dependent) variables if present.</p>
+<p>This method builds a complete variable declaration with modifiers (e.g., access, static,
+final), data type, variable name (or non-fixed formatted name), and optionally, an
+initializer expression. It uses values from <code>variableValues</code> to replace template keys
+in the initializer expression.</p>
+<p>If <code>requiredVariables</code> are present, this method recursively appends their code
+declarations using the overloaded <a name="#getDefCode(HashMap, VariableBean)">getDefCode(HashMap, VariableBean)</a> method.</p>
+<p>Template syntax keys such as <code>%\{variableName</code>} are replaced using the <code>CodeFormatterUtils.getKeySyntaxString(String)</code> utility.</p>
+<ul>
+<li><code>return</code>: the formatted Java code for the variable declaration(s)</li>
+</ul>
+<figure data-rehype-pretty-code-figure=""><pre style="background-color:#24292e;color:#e1e4e8" tabindex="0" data-language="java" data-theme="github-dark"><code data-language="java" data-theme="github-dark" style="display:grid"><span data-line=""><span style="color:#B392F0">getDefCode</span><span style="color:#E1E4E8">()</span></span></code></pre></figure>
+<h3 id="getdefcode-1" class="heading heading-h3"><a aria-hidden="true" tabindex="-1" href="#getdefcode-1"><span class="icon icon-link"></span></a>getDefCode</h3>
+<p>Generates a single-line Java variable declaration for this <code>VariableBean</code>, formatted
+based on current modifiers, type, and name, and replaces any template syntax in the
+initializer using the provided variable values.</p>
+<p>This method is internally used for generating code for nested or required variables by the
+main <a name="#getDefCode()">getDefCode()</a> method.</p>
+<p>Key behaviors include:</p>
+<ul><li>Modifier resolution via <code>getAccessModifier()</code>.</li><li>Uses either <code>variableName</code> or a formatted <code>nonFixedVariableName</code>.</li><li>If the variable is globally initialized and has initializer code, it will substitute
+variable placeholders using <code>variableValues</code>.</li><li>Returns a complete declaration ending in a semicolon.</li></ul>
+<ul>
+<li>
+<p><code>variableValues</code>: <code>String&gt;</code> — map of key-value replacements used for variable initializer template</p>
+</li>
+<li>
+<p><code>parentVariableModel</code>: <code>VariableBean</code> — the parent <code>VariableBean</code>, used for context (currently
+unused)</p>
+</li>
+<li>
+<p><code>return</code>: the generated Java variable declaration as a string</p>
+</li>
+</ul>
+<figure data-rehype-pretty-code-figure=""><pre style="background-color:#24292e;color:#e1e4e8" tabindex="0" data-language="java" data-theme="github-dark"><code data-language="java" data-theme="github-dark" style="display:grid"><span data-line=""><span style="color:#B392F0">getDefCode</span><span style="color:#E1E4E8">(String</span><span style="color:#F97583">&gt;</span><span style="color:#E1E4E8"> variableValues, VariableBean parentVariableModel)</span></span></code></pre></figure>
+<h3 id="getaccessmodifier" class="heading heading-h3"><a aria-hidden="true" tabindex="-1" href="#getaccessmodifier"><span class="icon icon-link"></span></a>getAccessModifier</h3>
+<p>Returns the access modifier of the variable (e.g., private, protected, public).</p>
+<ul>
+<li><code>return</code>: the access modifier as an integer constant</li>
+</ul>
+<figure data-rehype-pretty-code-figure=""><pre style="background-color:#24292e;color:#e1e4e8" tabindex="0" data-language="java" data-theme="github-dark"><code data-language="java" data-theme="github-dark" style="display:grid"><span data-line=""><span style="color:#B392F0">getAccessModifier</span><span style="color:#E1E4E8">()</span></span></code></pre></figure>
+<h3 id="setaccessmodifier" class="heading heading-h3"><a aria-hidden="true" tabindex="-1" href="#setaccessmodifier"><span class="icon icon-link"></span></a>setAccessModifier</h3>
+<p>Sets the access modifier of the variable.</p>
+<ul>
+<li><code>accessModifier</code>: <code>int</code> — the access modifier constant to set</li>
+</ul>
+<figure data-rehype-pretty-code-figure=""><pre style="background-color:#24292e;color:#e1e4e8" tabindex="0" data-language="java" data-theme="github-dark"><code data-language="java" data-theme="github-dark" style="display:grid"><span data-line=""><span style="color:#B392F0">setAccessModifier</span><span style="color:#E1E4E8">(</span><span style="color:#F97583">int</span><span style="color:#E1E4E8"> accessModifier)</span></span></code></pre></figure>
+<h3 id="getvariabletitle" class="heading heading-h3"><a aria-hidden="true" tabindex="-1" href="#getvariabletitle"><span class="icon icon-link"></span></a>getVariableTitle</h3>
+<p>Returns the human-readable title of the variable.</p>
+<ul>
+<li><code>return</code>: the variable title</li>
+</ul>
+<figure data-rehype-pretty-code-figure=""><pre style="background-color:#24292e;color:#e1e4e8" tabindex="0" data-language="java" data-theme="github-dark"><code data-language="java" data-theme="github-dark" style="display:grid"><span data-line=""><span style="color:#B392F0">getVariableTitle</span><span style="color:#E1E4E8">()</span></span></code></pre></figure>
+<h3 id="setvariabletitle" class="heading heading-h3"><a aria-hidden="true" tabindex="-1" href="#setvariabletitle"><span class="icon icon-link"></span></a>setVariableTitle</h3>
+<p>Sets the human-readable title of the variable.</p>
+<ul>
+<li><code>variableTitle</code>: <code>String</code> — the title to set</li>
+</ul>
+<figure data-rehype-pretty-code-figure=""><pre style="background-color:#24292e;color:#e1e4e8" tabindex="0" data-language="java" data-theme="github-dark"><code data-language="java" data-theme="github-dark" style="display:grid"><span data-line=""><span style="color:#B392F0">setVariableTitle</span><span style="color:#E1E4E8">(String variableTitle)</span></span></code></pre></figure>
+<h3 id="getvariabledatatype" class="heading heading-h3"><a aria-hidden="true" tabindex="-1" href="#getvariabledatatype"><span class="icon icon-link"></span></a>getVariableDataType</h3>
+<p>Returns the data type of the variable.</p>
+<ul>
+<li><code>return</code>: the <span>DatatypeBean</span> representing the variable&#x27;s type</li>
+</ul>
+<figure data-rehype-pretty-code-figure=""><pre style="background-color:#24292e;color:#e1e4e8" tabindex="0" data-language="java" data-theme="github-dark"><code data-language="java" data-theme="github-dark" style="display:grid"><span data-line=""><span style="color:#B392F0">getVariableDataType</span><span style="color:#E1E4E8">()</span></span></code></pre></figure>
+<h3 id="setvariabledatatype" class="heading heading-h3"><a aria-hidden="true" tabindex="-1" href="#setvariabledatatype"><span class="icon icon-link"></span></a>setVariableDataType</h3>
+<p>Sets the data type of the variable.</p>
+<ul>
+<li><code>variableDataType</code>: <code>DatatypeBean</code> — the <span>DatatypeBean</span> to set</li>
+</ul>
+<figure data-rehype-pretty-code-figure=""><pre style="background-color:#24292e;color:#e1e4e8" tabindex="0" data-language="java" data-theme="github-dark"><code data-language="java" data-theme="github-dark" style="display:grid"><span data-line=""><span style="color:#B392F0">setVariableDataType</span><span style="color:#E1E4E8">(DatatypeBean variableDataType)</span></span></code></pre></figure>
+<h3 id="getvariablename" class="heading heading-h3"><a aria-hidden="true" tabindex="-1" href="#getvariablename"><span class="icon icon-link"></span></a>getVariableName</h3>
+<p>Returns the variable&#x27;s identifier name.</p>
+<ul>
+<li><code>return</code>: the variable name</li>
+</ul>
+<figure data-rehype-pretty-code-figure=""><pre style="background-color:#24292e;color:#e1e4e8" tabindex="0" data-language="java" data-theme="github-dark"><code data-language="java" data-theme="github-dark" style="display:grid"><span data-line=""><span style="color:#B392F0">getVariableName</span><span style="color:#E1E4E8">()</span></span></code></pre></figure>
+<h3 id="setvariablename" class="heading heading-h3"><a aria-hidden="true" tabindex="-1" href="#setvariablename"><span class="icon icon-link"></span></a>setVariableName</h3>
+<p>Sets the variable&#x27;s identifier name.</p>
+<ul>
+<li><code>variableName</code>: <code>String</code> — the variable name to set</li>
+</ul>
+<figure data-rehype-pretty-code-figure=""><pre style="background-color:#24292e;color:#e1e4e8" tabindex="0" data-language="java" data-theme="github-dark"><code data-language="java" data-theme="github-dark" style="display:grid"><span data-line=""><span style="color:#B392F0">setVariableName</span><span style="color:#E1E4E8">(String variableName)</span></span></code></pre></figure>
+<h3 id="getnonfixedvariablename" class="heading heading-h3"><a aria-hidden="true" tabindex="-1" href="#getnonfixedvariablename"><span class="icon icon-link"></span></a>getNonFixedVariableName</h3>
+<p>Returns the variable name template used when generating formatted names.</p>
+<ul>
+<li><code>return</code>: the non-fixed variable name format string</li>
+</ul>
+<figure data-rehype-pretty-code-figure=""><pre style="background-color:#24292e;color:#e1e4e8" tabindex="0" data-language="java" data-theme="github-dark"><code data-language="java" data-theme="github-dark" style="display:grid"><span data-line=""><span style="color:#B392F0">getNonFixedVariableName</span><span style="color:#E1E4E8">()</span></span></code></pre></figure>
+<h3 id="getprocessedvariablename" class="heading heading-h3"><a aria-hidden="true" tabindex="-1" href="#getprocessedvariablename"><span class="icon icon-link"></span></a>getProcessedVariableName</h3>
+<ul>
+<li><code>return</code>: the final variable name.</li>
+</ul>
+<figure data-rehype-pretty-code-figure=""><pre style="background-color:#24292e;color:#e1e4e8" tabindex="0" data-language="java" data-theme="github-dark"><code data-language="java" data-theme="github-dark" style="display:grid"><span data-line=""><span style="color:#B392F0">getProcessedVariableName</span><span style="color:#E1E4E8">()</span></span></code></pre></figure>
+<h3 id="setnonfixedvariablename" class="heading heading-h3"><a aria-hidden="true" tabindex="-1" href="#setnonfixedvariablename"><span class="icon icon-link"></span></a>setNonFixedVariableName</h3>
+<p>Sets the template for generating non-fixed variable names.</p>
+<ul>
+<li><code>nonFixedVariableName</code>: <code>String</code> — the format string to set</li>
+</ul>
+<figure data-rehype-pretty-code-figure=""><pre style="background-color:#24292e;color:#e1e4e8" tabindex="0" data-language="java" data-theme="github-dark"><code data-language="java" data-theme="github-dark" style="display:grid"><span data-line=""><span style="color:#B392F0">setNonFixedVariableName</span><span style="color:#E1E4E8">(String nonFixedVariableName)</span></span></code></pre></figure>
+<h3 id="getvariableinitializercode" class="heading heading-h3"><a aria-hidden="true" tabindex="-1" href="#getvariableinitializercode"><span class="icon icon-link"></span></a>getVariableInitializerCode</h3>
+<p>Returns the code used to initialize the variable.</p>
+<ul>
+<li><code>return</code>: the variable initializer code, or <code>null</code> if none</li>
+</ul>
+<figure data-rehype-pretty-code-figure=""><pre style="background-color:#24292e;color:#e1e4e8" tabindex="0" data-language="java" data-theme="github-dark"><code data-language="java" data-theme="github-dark" style="display:grid"><span data-line=""><span style="color:#B392F0">getVariableInitializerCode</span><span style="color:#E1E4E8">()</span></span></code></pre></figure>
+<h3 id="setvariableinitializercode" class="heading heading-h3"><a aria-hidden="true" tabindex="-1" href="#setvariableinitializercode"><span class="icon icon-link"></span></a>setVariableInitializerCode</h3>
+<p>Sets the code used to initialize the variable.</p>
+<ul>
+<li><code>variableInitializerCode</code>: <code>String</code> — the initializer code to set</li>
+</ul>
+<figure data-rehype-pretty-code-figure=""><pre style="background-color:#24292e;color:#e1e4e8" tabindex="0" data-language="java" data-theme="github-dark"><code data-language="java" data-theme="github-dark" style="display:grid"><span data-line=""><span style="color:#B392F0">setVariableInitializerCode</span><span style="color:#E1E4E8">(String variableInitializerCode)</span></span></code></pre></figure>
+<h3 id="getmustbegloballyintialized" class="heading heading-h3"><a aria-hidden="true" tabindex="-1" href="#getmustbegloballyintialized"><span class="icon icon-link"></span></a>getMustBeGloballyIntialized</h3>
+<p>Returns whether the variable must be initialized globally at the top level.</p>
+<ul>
+<li><code>return</code>: <code>true</code> if it must be initialized globally, otherwise <code>false</code></li>
+</ul>
+<figure data-rehype-pretty-code-figure=""><pre style="background-color:#24292e;color:#e1e4e8" tabindex="0" data-language="java" data-theme="github-dark"><code data-language="java" data-theme="github-dark" style="display:grid"><span data-line=""><span style="color:#B392F0">getMustBeGloballyIntialized</span><span style="color:#E1E4E8">()</span></span></code></pre></figure>
+<h3 id="setmustbegloballyintialized" class="heading heading-h3"><a aria-hidden="true" tabindex="-1" href="#setmustbegloballyintialized"><span class="icon icon-link"></span></a>setMustBeGloballyIntialized</h3>
+<p>Sets whether the variable must be initialized globally.</p>
+<ul>
+<li><code>mustBeGloballyIntialized</code>: <code>boolean</code> — whether it must be globally initialized</li>
+</ul>
+<figure data-rehype-pretty-code-figure=""><pre style="background-color:#24292e;color:#e1e4e8" tabindex="0" data-language="java" data-theme="github-dark"><code data-language="java" data-theme="github-dark" style="display:grid"><span data-line=""><span style="color:#B392F0">setMustBeGloballyIntialized</span><span style="color:#E1E4E8">(</span><span style="color:#F97583">boolean</span><span style="color:#E1E4E8"> mustBeGloballyIntialized)</span></span></code></pre></figure>
+<h3 id="getisinitializedglobally" class="heading heading-h3"><a aria-hidden="true" tabindex="-1" href="#getisinitializedglobally"><span class="icon icon-link"></span></a>getIsInitializedGlobally</h3>
+<p>Returns whether the variable is currently initialized globally.</p>
+<ul>
+<li><code>return</code>: <code>true</code> if it is globally initialized, otherwise <code>false</code></li>
+</ul>
+<figure data-rehype-pretty-code-figure=""><pre style="background-color:#24292e;color:#e1e4e8" tabindex="0" data-language="java" data-theme="github-dark"><code data-language="java" data-theme="github-dark" style="display:grid"><span data-line=""><span style="color:#B392F0">getIsInitializedGlobally</span><span style="color:#E1E4E8">()</span></span></code></pre></figure>
+<h3 id="setisinitializedglobally" class="heading heading-h3"><a aria-hidden="true" tabindex="-1" href="#setisinitializedglobally"><span class="icon icon-link"></span></a>setIsInitializedGlobally</h3>
+<p>Sets whether the variable is initialized globally.</p>
+<ul>
+<li><code>isInitializedGlobally</code>: <code>boolean</code> — the global initialization status</li>
+</ul>
+<figure data-rehype-pretty-code-figure=""><pre style="background-color:#24292e;color:#e1e4e8" tabindex="0" data-language="java" data-theme="github-dark"><code data-language="java" data-theme="github-dark" style="display:grid"><span data-line=""><span style="color:#B392F0">setIsInitializedGlobally</span><span style="color:#E1E4E8">(</span><span style="color:#F97583">boolean</span><span style="color:#E1E4E8"> isInitializedGlobally)</span></span></code></pre></figure>
+<h3 id="getcaninitializedglobally" class="heading heading-h3"><a aria-hidden="true" tabindex="-1" href="#getcaninitializedglobally"><span class="icon icon-link"></span></a>getCanInitializedGlobally</h3>
+<p>Returns whether the variable can be initialized globally.</p>
+<ul>
+<li><code>return</code>: <code>true</code> if it can be initialized globally, otherwise <code>false</code></li>
+</ul>
+<figure data-rehype-pretty-code-figure=""><pre style="background-color:#24292e;color:#e1e4e8" tabindex="0" data-language="java" data-theme="github-dark"><code data-language="java" data-theme="github-dark" style="display:grid"><span data-line=""><span style="color:#B392F0">getCanInitializedGlobally</span><span style="color:#E1E4E8">()</span></span></code></pre></figure>
+<h3 id="setcaninitializedglobally" class="heading heading-h3"><a aria-hidden="true" tabindex="-1" href="#setcaninitializedglobally"><span class="icon icon-link"></span></a>setCanInitializedGlobally</h3>
+<p>Sets whether the variable can be initialized globally.</p>
+<ul>
+<li><code>canInitializedGlobally</code>: <code>boolean</code> — whether it can be globally initialized</li>
+</ul>
+<figure data-rehype-pretty-code-figure=""><pre style="background-color:#24292e;color:#e1e4e8" tabindex="0" data-language="java" data-theme="github-dark"><code data-language="java" data-theme="github-dark" style="display:grid"><span data-line=""><span style="color:#B392F0">setCanInitializedGlobally</span><span style="color:#E1E4E8">(</span><span style="color:#F97583">boolean</span><span style="color:#E1E4E8"> canInitializedGlobally)</span></span></code></pre></figure>
+<h3 id="getisstaticvariable" class="heading heading-h3"><a aria-hidden="true" tabindex="-1" href="#getisstaticvariable"><span class="icon icon-link"></span></a>getIsStaticVariable</h3>
+<p>Returns whether the variable is declared as <code>static</code>.</p>
+<ul>
+<li><code>return</code>: <code>true</code> if static, otherwise <code>false</code></li>
+</ul>
+<figure data-rehype-pretty-code-figure=""><pre style="background-color:#24292e;color:#e1e4e8" tabindex="0" data-language="java" data-theme="github-dark"><code data-language="java" data-theme="github-dark" style="display:grid"><span data-line=""><span style="color:#B392F0">getIsStaticVariable</span><span style="color:#E1E4E8">()</span></span></code></pre></figure>
+<h3 id="setisstaticvariable" class="heading heading-h3"><a aria-hidden="true" tabindex="-1" href="#setisstaticvariable"><span class="icon icon-link"></span></a>setIsStaticVariable</h3>
+<p>Sets whether the variable is declared as <code>static</code>.</p>
+<ul>
+<li><code>isStaticVariable</code>: <code>boolean</code> — whether it is static</li>
+</ul>
+<figure data-rehype-pretty-code-figure=""><pre style="background-color:#24292e;color:#e1e4e8" tabindex="0" data-language="java" data-theme="github-dark"><code data-language="java" data-theme="github-dark" style="display:grid"><span data-line=""><span style="color:#B392F0">setIsStaticVariable</span><span style="color:#E1E4E8">(</span><span style="color:#F97583">boolean</span><span style="color:#E1E4E8"> isStaticVariable)</span></span></code></pre></figure>
+<h3 id="getisfinalvariable" class="heading heading-h3"><a aria-hidden="true" tabindex="-1" href="#getisfinalvariable"><span class="icon icon-link"></span></a>getIsFinalVariable</h3>
+<p>Returns whether the variable is declared as <code>final</code>.</p>
+<ul>
+<li><code>return</code>: <code>true</code> if final, otherwise <code>false</code></li>
+</ul>
+<figure data-rehype-pretty-code-figure=""><pre style="background-color:#24292e;color:#e1e4e8" tabindex="0" data-language="java" data-theme="github-dark"><code data-language="java" data-theme="github-dark" style="display:grid"><span data-line=""><span style="color:#B392F0">getIsFinalVariable</span><span style="color:#E1E4E8">()</span></span></code></pre></figure>
+<h3 id="setisfinalvariable" class="heading heading-h3"><a aria-hidden="true" tabindex="-1" href="#setisfinalvariable"><span class="icon icon-link"></span></a>setIsFinalVariable</h3>
+<p>Sets whether the variable is declared as <code>final</code>.</p>
+<ul>
+<li><code>isFinalVariable</code>: <code>boolean</code> — whether it is final</li>
+</ul>
+<figure data-rehype-pretty-code-figure=""><pre style="background-color:#24292e;color:#e1e4e8" tabindex="0" data-language="java" data-theme="github-dark"><code data-language="java" data-theme="github-dark" style="display:grid"><span data-line=""><span style="color:#B392F0">setIsFinalVariable</span><span style="color:#E1E4E8">(</span><span style="color:#F97583">boolean</span><span style="color:#E1E4E8"> isFinalVariable)</span></span></code></pre></figure>
+<h3 id="geticon" class="heading heading-h3"><a aria-hidden="true" tabindex="-1" href="#geticon"><span class="icon icon-link"></span></a>getIcon</h3>
+<p>Returns the icon representing this variable, if any.</p>
+<ul>
+<li><code>return</code>: a byte array of the icon image data</li>
+</ul>
+<figure data-rehype-pretty-code-figure=""><pre style="background-color:#24292e;color:#e1e4e8" tabindex="0" data-language="java" data-theme="github-dark"><code data-language="java" data-theme="github-dark" style="display:grid"><span data-line=""><span style="color:#B392F0">getIcon</span><span style="color:#E1E4E8">()</span></span></code></pre></figure>
+<h3 id="seticon" class="heading heading-h3"><a aria-hidden="true" tabindex="-1" href="#seticon"><span class="icon icon-link"></span></a>setIcon</h3>
+<p>Sets the icon representing this variable.</p>
+<ul>
+<li><code>icon</code>: <code>byte[]</code> — the byte array of the icon image data</li>
+</ul>
+<figure data-rehype-pretty-code-figure=""><pre style="background-color:#24292e;color:#e1e4e8" tabindex="0" data-language="java" data-theme="github-dark"><code data-language="java" data-theme="github-dark" style="display:grid"><span data-line=""><span style="color:#B392F0">setIcon</span><span style="color:#E1E4E8">(</span><span style="color:#F97583">byte</span><span style="color:#E1E4E8">[] icon)</span></span></code></pre></figure>
+<h3 id="getrequiredvariables" class="heading heading-h3"><a aria-hidden="true" tabindex="-1" href="#getrequiredvariables"><span class="icon icon-link"></span></a>getRequiredVariables</h3>
+<p>Returns the list of dependent or required variables.</p>
+<ul>
+<li><code>return</code>: an array of <code>VariableBean</code> objects</li>
+</ul>
+<figure data-rehype-pretty-code-figure=""><pre style="background-color:#24292e;color:#e1e4e8" tabindex="0" data-language="java" data-theme="github-dark"><code data-language="java" data-theme="github-dark" style="display:grid"><span data-line=""><span style="color:#B392F0">getRequiredVariables</span><span style="color:#E1E4E8">()</span></span></code></pre></figure>
+<h3 id="setrequiredvariables" class="heading heading-h3"><a aria-hidden="true" tabindex="-1" href="#setrequiredvariables"><span class="icon icon-link"></span></a>setRequiredVariables</h3>
+<p>Sets the list of dependent or required variables.</p>
+<ul>
+<li><code>requiredVariables</code>: <code>VariableBean[]</code> — an array of <code>VariableBean</code> to set</li>
+</ul>
+<figure data-rehype-pretty-code-figure=""><pre style="background-color:#24292e;color:#e1e4e8" tabindex="0" data-language="java" data-theme="github-dark"><code data-language="java" data-theme="github-dark" style="display:grid"><span data-line=""><span style="color:#B392F0">setRequiredVariables</span><span style="color:#E1E4E8">(</span><span style="color:#F97583">VariableBean</span><span style="color:#E1E4E8">[] requiredVariables)</span></span></code></pre></figure>
+<h3 id="getvariabletitles" class="heading heading-h3"><a aria-hidden="true" tabindex="-1" href="#getvariabletitles"><span class="icon icon-link"></span></a>getVariableTitles</h3>
+<p>Returns the localized or alternate titles of the variable.</p>
+<ul>
+<li><code>return</code>: a map of language codes or keys to title strings</li>
+</ul>
+<figure data-rehype-pretty-code-figure=""><pre style="background-color:#24292e;color:#e1e4e8" tabindex="0" data-language="java" data-theme="github-dark"><code data-language="java" data-theme="github-dark" style="display:grid"><span data-line=""><span style="color:#B392F0">getVariableTitles</span><span style="color:#E1E4E8">()</span></span></code></pre></figure>
+<h3 id="setvariabletitles" class="heading heading-h3"><a aria-hidden="true" tabindex="-1" href="#setvariabletitles"><span class="icon icon-link"></span></a>setVariableTitles</h3>
+<p>Sets the localized or alternate titles of the variable.</p>
+<ul>
+<li><code>variableTitles</code>: <code>String&gt;</code> — a map of title values</li>
+</ul>
+<figure data-rehype-pretty-code-figure=""><pre style="background-color:#24292e;color:#e1e4e8" tabindex="0" data-language="java" data-theme="github-dark"><code data-language="java" data-theme="github-dark" style="display:grid"><span data-line=""><span style="color:#B392F0">setVariableTitles</span><span style="color:#E1E4E8">(String</span><span style="color:#F97583">&gt;</span><span style="color:#E1E4E8"> variableTitles)</span></span></code></pre></figure>
+<h3 id="getvariablevalues" class="heading heading-h3"><a aria-hidden="true" tabindex="-1" href="#getvariablevalues"><span class="icon icon-link"></span></a>getVariableValues</h3>
+<p>Returns the value substitutions for this variable, used during code generation.</p>
+<ul>
+<li><code>return</code>: a map of placeholder keys to actual string values</li>
+</ul>
+<figure data-rehype-pretty-code-figure=""><pre style="background-color:#24292e;color:#e1e4e8" tabindex="0" data-language="java" data-theme="github-dark"><code data-language="java" data-theme="github-dark" style="display:grid"><span data-line=""><span style="color:#B392F0">getVariableValues</span><span style="color:#E1E4E8">()</span></span></code></pre></figure>
+<h3 id="setvariablevalues" class="heading heading-h3"><a aria-hidden="true" tabindex="-1" href="#setvariablevalues"><span class="icon icon-link"></span></a>setVariableValues</h3>
+<p>Sets the value substitutions for this variable.</p>
+<ul>
+<li><code>variableValues</code>: <code>String&gt;</code> — a map of value replacements</li>
+</ul>
+<figure data-rehype-pretty-code-figure=""><pre style="background-color:#24292e;color:#e1e4e8" tabindex="0" data-language="java" data-theme="github-dark"><code data-language="java" data-theme="github-dark" style="display:grid"><span data-line=""><span style="color:#B392F0">setVariableValues</span><span style="color:#E1E4E8">(String</span><span style="color:#F97583">&gt;</span><span style="color:#E1E4E8"> variableValues)</span></span></code></pre></figure>
+<h3 id="getinputtype" class="heading heading-h3"><a aria-hidden="true" tabindex="-1" href="#getinputtype"><span class="icon icon-link"></span></a>getInputType</h3>
+<p>Returns the input type configuration for variable editor UI or interpretation.</p>
+<ul>
+<li><code>return</code>: a map of input field keys to input type constants</li>
+</ul>
+<figure data-rehype-pretty-code-figure=""><pre style="background-color:#24292e;color:#e1e4e8" tabindex="0" data-language="java" data-theme="github-dark"><code data-language="java" data-theme="github-dark" style="display:grid"><span data-line=""><span style="color:#B392F0">getInputType</span><span style="color:#E1E4E8">()</span></span></code></pre></figure>
+<h3 id="setinputtype" class="heading heading-h3"><a aria-hidden="true" tabindex="-1" href="#setinputtype"><span class="icon icon-link"></span></a>setInputType</h3>
+<p>Sets the input type configuration for variable editors.</p>
+<ul>
+<li><code>inputType</code>: <code>Integer&gt;</code> — a map of input types</li>
+</ul>
+<figure data-rehype-pretty-code-figure=""><pre style="background-color:#24292e;color:#e1e4e8" tabindex="0" data-language="java" data-theme="github-dark"><code data-language="java" data-theme="github-dark" style="display:grid"><span data-line=""><span style="color:#B392F0">setInputType</span><span style="color:#E1E4E8">(Integer</span><span style="color:#F97583">&gt;</span><span style="color:#E1E4E8"> inputType)</span></span></code></pre></figure>
+<h3 id="getapplycolorfilter" class="heading heading-h3"><a aria-hidden="true" tabindex="-1" href="#getapplycolorfilter"><span class="icon icon-link"></span></a>getApplyColorFilter</h3>
+<p>Returns whether a color filter should be applied to this variable in the UI.</p>
+<ul>
+<li><code>return</code>: <code>true</code> if a color filter is applied, otherwise <code>false</code></li>
+</ul>
+<figure data-rehype-pretty-code-figure=""><pre style="background-color:#24292e;color:#e1e4e8" tabindex="0" data-language="java" data-theme="github-dark"><code data-language="java" data-theme="github-dark" style="display:grid"><span data-line=""><span style="color:#B392F0">getApplyColorFilter</span><span style="color:#E1E4E8">()</span></span></code></pre></figure>
+<h3 id="setapplycolorfilter" class="heading heading-h3"><a aria-hidden="true" tabindex="-1" href="#setapplycolorfilter"><span class="icon icon-link"></span></a>setApplyColorFilter</h3>
+<p>Sets whether a color filter should be applied to this variable in the UI.</p>
+<ul>
+<li><code>applyColorFilter</code>: <code>boolean</code> — whether to apply a color filter</li>
+</ul>
+<figure data-rehype-pretty-code-figure=""><pre style="background-color:#24292e;color:#e1e4e8" tabindex="0" data-language="java" data-theme="github-dark"><code data-language="java" data-theme="github-dark" style="display:grid"><span data-line=""><span style="color:#B392F0">setApplyColorFilter</span><span style="color:#E1E4E8">(</span><span style="color:#F97583">boolean</span><span style="color:#E1E4E8"> applyColorFilter)</span></span></code></pre></figure>
+<h3 id="getbeanmanifest" class="heading heading-h3"><a aria-hidden="true" tabindex="-1" href="#getbeanmanifest"><span class="icon icon-link"></span></a>getBeanManifest</h3>
+<p>Returns the <span>BeanManifest</span> that holds additional metadata about this variable.</p>
+<ul>
+<li><code>return</code>: the associated <code>BeanManifest</code>, or <code>null</code> if not set</li>
+</ul>
+<figure data-rehype-pretty-code-figure=""><pre style="background-color:#24292e;color:#e1e4e8" tabindex="0" data-language="java" data-theme="github-dark"><code data-language="java" data-theme="github-dark" style="display:grid"><span data-line=""><span style="color:#B392F0">getBeanManifest</span><span style="color:#E1E4E8">()</span></span></code></pre></figure>
+<h3 id="setbeanmanifest" class="heading heading-h3"><a aria-hidden="true" tabindex="-1" href="#setbeanmanifest"><span class="icon icon-link"></span></a>setBeanManifest</h3>
+<p>Sets the <span>BeanManifest</span> containing metadata for this variable.</p>
+<ul>
+<li><code>beanManifest</code>: <code>BeanManifest</code> — the manifest to associate with this variable</li>
+</ul>
+<figure data-rehype-pretty-code-figure=""><pre style="background-color:#24292e;color:#e1e4e8" tabindex="0" data-language="java" data-theme="github-dark"><code data-language="java" data-theme="github-dark" style="display:grid"><span data-line=""><span style="color:#B392F0">setBeanManifest</span><span style="color:#E1E4E8">(BeanManifest beanManifest)</span></span></code></pre></figure>

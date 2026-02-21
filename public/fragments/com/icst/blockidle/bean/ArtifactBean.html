@@ -1,0 +1,107 @@
+
+<style>
+
+figure[data-rehype-pretty-code-figure] {
+  margin: 0;
+}
+
+pre {
+  padding: 16px;
+  border-radius: 8px;
+  overflow-x: auto;
+  margin: 0;
+}
+
+pre code {
+  display: block;
+  white-space: pre;
+}
+
+pre code span[data-line] {
+  display: block;
+  padding-left: 0;
+}
+
+h1,
+h2,
+h3 {
+  margin-top: 0.5em;
+}
+</style>
+<h1 id="artifactbean" class="heading heading-h1"><a aria-hidden="true" tabindex="-1" href="#artifactbean"><span class="icon icon-link"></span></a>ArtifactBean</h1>
+<p>Represents a Maven-style artifact with metadata such as group ID, artifact ID,
+version, repository location, and file extension.</p>
+<p>This bean is serializable and extends <span>BeanMetadata</span>.</p>
+<h2 id="methods" class="heading heading-h2"><a aria-hidden="true" tabindex="-1" href="#methods"><span class="icon icon-link"></span></a>Methods</h2>
+<h3 id="getgroupid" class="heading heading-h3"><a aria-hidden="true" tabindex="-1" href="#getgroupid"><span class="icon icon-link"></span></a>getGroupId</h3>
+<p>Returns the group ID of the artifact (e.g., <code>&quot;com.example&quot;</code>).</p>
+<ul>
+<li><code>return</code>: the group ID</li>
+</ul>
+<figure data-rehype-pretty-code-figure=""><pre style="background-color:#24292e;color:#e1e4e8" tabindex="0" data-language="java" data-theme="github-dark"><code data-language="java" data-theme="github-dark" style="display:grid"><span data-line=""><span style="color:#B392F0">getGroupId</span><span style="color:#E1E4E8">()</span></span></code></pre></figure>
+<h3 id="setgroupid" class="heading heading-h3"><a aria-hidden="true" tabindex="-1" href="#setgroupid"><span class="icon icon-link"></span></a>setGroupId</h3>
+<p>Sets the group ID of the artifact.</p>
+<ul>
+<li><code>groupId</code>: <code>String</code> — the group ID to set</li>
+</ul>
+<figure data-rehype-pretty-code-figure=""><pre style="background-color:#24292e;color:#e1e4e8" tabindex="0" data-language="java" data-theme="github-dark"><code data-language="java" data-theme="github-dark" style="display:grid"><span data-line=""><span style="color:#B392F0">setGroupId</span><span style="color:#E1E4E8">(String groupId)</span></span></code></pre></figure>
+<h3 id="getartifactid" class="heading heading-h3"><a aria-hidden="true" tabindex="-1" href="#getartifactid"><span class="icon icon-link"></span></a>getArtifactId</h3>
+<p>Returns the artifact ID of the artifact (e.g., <code>&quot;my-library&quot;</code>).</p>
+<ul>
+<li><code>return</code>: the artifact ID</li>
+</ul>
+<figure data-rehype-pretty-code-figure=""><pre style="background-color:#24292e;color:#e1e4e8" tabindex="0" data-language="java" data-theme="github-dark"><code data-language="java" data-theme="github-dark" style="display:grid"><span data-line=""><span style="color:#B392F0">getArtifactId</span><span style="color:#E1E4E8">()</span></span></code></pre></figure>
+<h3 id="setartifactid" class="heading heading-h3"><a aria-hidden="true" tabindex="-1" href="#setartifactid"><span class="icon icon-link"></span></a>setArtifactId</h3>
+<p>Sets the artifact ID of the artifact.</p>
+<ul>
+<li><code>artifactId</code>: <code>String</code> — the artifact ID to set</li>
+</ul>
+<figure data-rehype-pretty-code-figure=""><pre style="background-color:#24292e;color:#e1e4e8" tabindex="0" data-language="java" data-theme="github-dark"><code data-language="java" data-theme="github-dark" style="display:grid"><span data-line=""><span style="color:#B392F0">setArtifactId</span><span style="color:#E1E4E8">(String artifactId)</span></span></code></pre></figure>
+<h3 id="getversion" class="heading heading-h3"><a aria-hidden="true" tabindex="-1" href="#getversion"><span class="icon icon-link"></span></a>getVersion</h3>
+<p>Returns the version of the artifact (e.g., <code>&quot;1.0.0&quot;</code>).</p>
+<ul>
+<li><code>return</code>: the version string</li>
+</ul>
+<figure data-rehype-pretty-code-figure=""><pre style="background-color:#24292e;color:#e1e4e8" tabindex="0" data-language="java" data-theme="github-dark"><code data-language="java" data-theme="github-dark" style="display:grid"><span data-line=""><span style="color:#B392F0">getVersion</span><span style="color:#E1E4E8">()</span></span></code></pre></figure>
+<h3 id="setversion" class="heading heading-h3"><a aria-hidden="true" tabindex="-1" href="#setversion"><span class="icon icon-link"></span></a>setVersion</h3>
+<p>Sets the version of the artifact.</p>
+<ul>
+<li><code>version</code>: <code>String</code> — the version to set</li>
+</ul>
+<figure data-rehype-pretty-code-figure=""><pre style="background-color:#24292e;color:#e1e4e8" tabindex="0" data-language="java" data-theme="github-dark"><code data-language="java" data-theme="github-dark" style="display:grid"><span data-line=""><span style="color:#B392F0">setVersion</span><span style="color:#E1E4E8">(String version)</span></span></code></pre></figure>
+<h3 id="getrepositoryname" class="heading heading-h3"><a aria-hidden="true" tabindex="-1" href="#getrepositoryname"><span class="icon icon-link"></span></a>getRepositoryName</h3>
+<p>Returns the name of the repository hosting the artifact.</p>
+<ul>
+<li><code>return</code>: the repository name</li>
+</ul>
+<figure data-rehype-pretty-code-figure=""><pre style="background-color:#24292e;color:#e1e4e8" tabindex="0" data-language="java" data-theme="github-dark"><code data-language="java" data-theme="github-dark" style="display:grid"><span data-line=""><span style="color:#B392F0">getRepositoryName</span><span style="color:#E1E4E8">()</span></span></code></pre></figure>
+<h3 id="setrepositoryname" class="heading heading-h3"><a aria-hidden="true" tabindex="-1" href="#setrepositoryname"><span class="icon icon-link"></span></a>setRepositoryName</h3>
+<p>Sets the name of the repository hosting the artifact.</p>
+<ul>
+<li><code>repositoryName</code>: <code>String</code> — the repository name to set</li>
+</ul>
+<figure data-rehype-pretty-code-figure=""><pre style="background-color:#24292e;color:#e1e4e8" tabindex="0" data-language="java" data-theme="github-dark"><code data-language="java" data-theme="github-dark" style="display:grid"><span data-line=""><span style="color:#B392F0">setRepositoryName</span><span style="color:#E1E4E8">(String repositoryName)</span></span></code></pre></figure>
+<h3 id="getrepositoryurl" class="heading heading-h3"><a aria-hidden="true" tabindex="-1" href="#getrepositoryurl"><span class="icon icon-link"></span></a>getRepositoryUrl</h3>
+<p>Returns the URL of the repository where the artifact is located.</p>
+<ul>
+<li><code>return</code>: the repository URL</li>
+</ul>
+<figure data-rehype-pretty-code-figure=""><pre style="background-color:#24292e;color:#e1e4e8" tabindex="0" data-language="java" data-theme="github-dark"><code data-language="java" data-theme="github-dark" style="display:grid"><span data-line=""><span style="color:#B392F0">getRepositoryUrl</span><span style="color:#E1E4E8">()</span></span></code></pre></figure>
+<h3 id="setrepositoryurl" class="heading heading-h3"><a aria-hidden="true" tabindex="-1" href="#setrepositoryurl"><span class="icon icon-link"></span></a>setRepositoryUrl</h3>
+<p>Sets the URL of the repository where the artifact is located.</p>
+<ul>
+<li><code>repositoryUrl</code>: <code>String</code> — the repository URL to set</li>
+</ul>
+<figure data-rehype-pretty-code-figure=""><pre style="background-color:#24292e;color:#e1e4e8" tabindex="0" data-language="java" data-theme="github-dark"><code data-language="java" data-theme="github-dark" style="display:grid"><span data-line=""><span style="color:#B392F0">setRepositoryUrl</span><span style="color:#E1E4E8">(String repositoryUrl)</span></span></code></pre></figure>
+<h3 id="getextension" class="heading heading-h3"><a aria-hidden="true" tabindex="-1" href="#getextension"><span class="icon icon-link"></span></a>getExtension</h3>
+<p>Returns the file extension of the artifact (e.g., <code>&quot;jar&quot;</code>, <code>&quot;aar&quot;</code>).</p>
+<ul>
+<li><code>return</code>: the artifact&#x27;s file extension</li>
+</ul>
+<figure data-rehype-pretty-code-figure=""><pre style="background-color:#24292e;color:#e1e4e8" tabindex="0" data-language="java" data-theme="github-dark"><code data-language="java" data-theme="github-dark" style="display:grid"><span data-line=""><span style="color:#B392F0">getExtension</span><span style="color:#E1E4E8">()</span></span></code></pre></figure>
+<h3 id="setextension" class="heading heading-h3"><a aria-hidden="true" tabindex="-1" href="#setextension"><span class="icon icon-link"></span></a>setExtension</h3>
+<p>Sets the file extension of the artifact.</p>
+<ul>
+<li><code>extension</code>: <code>String</code> — the file extension to set</li>
+</ul>
+<figure data-rehype-pretty-code-figure=""><pre style="background-color:#24292e;color:#e1e4e8" tabindex="0" data-language="java" data-theme="github-dark"><code data-language="java" data-theme="github-dark" style="display:grid"><span data-line=""><span style="color:#B392F0">setExtension</span><span style="color:#E1E4E8">(String extension)</span></span></code></pre></figure>

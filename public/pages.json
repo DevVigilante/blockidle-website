@@ -1,0 +1,12 @@
+[
+  "com/icst/blockidle/bean/ArtifactBean.html",
+  "com/icst/blockidle/bean/BeanManifest.html",
+  "com/icst/blockidle/bean/BeanMetadata.html",
+  "com/icst/blockidle/bean/DatatypeBean.html",
+  "com/icst/blockidle/bean/IDLEFileBean.html",
+  "com/icst/blockidle/bean/IDLEFolderBean.html",
+  "com/icst/blockidle/bean/VariableBean.html",
+  "com/icst/blockidle/bean/utils/BeanArrayCloneUtils.html",
+  "com/icst/blockidle/bean/utils/BeansUIDConstants.html",
+  "com/icst/blockidle/bean/utils/CodeFormatterUtils.html"
+]

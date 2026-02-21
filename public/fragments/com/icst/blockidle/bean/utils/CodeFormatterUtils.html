@@ -1,0 +1,80 @@
+
+<style>
+
+figure[data-rehype-pretty-code-figure] {
+  margin: 0;
+}
+
+pre {
+  padding: 16px;
+  border-radius: 8px;
+  overflow-x: auto;
+  margin: 0;
+}
+
+pre code {
+  display: block;
+  white-space: pre;
+}
+
+pre code span[data-line] {
+  display: block;
+  padding-left: 0;
+}
+
+h1,
+h2,
+h3 {
+  margin-top: 0.5em;
+}
+</style>
+<h1 id="codeformatterutils" class="heading heading-h1"><a aria-hidden="true" tabindex="-1" href="#codeformatterutils"><span class="icon icon-link"></span></a>CodeFormatterUtils</h1>
+<p>Utility class providing methods for formatting and analyzing code strings, such as generating
+syntax keys, applying indentation, and calculating indentation levels.</p>
+<p>This class is not intended to be instantiated or extended.</p>
+<h2 id="methods" class="heading heading-h2"><a aria-hidden="true" tabindex="-1" href="#methods"><span class="icon icon-link"></span></a>Methods</h2>
+<h3 id="getkeysyntaxstring" class="heading heading-h3"><a aria-hidden="true" tabindex="-1" href="#getkeysyntaxstring"><span class="icon icon-link"></span></a>getKeySyntaxString</h3>
+<p>Formats the given key as a custom syntax string in the format <code>&lt;CodeKey : key&gt;</code> which
+is used by Block IDLE application.</p>
+<ul>
+<li>
+<p><code>key</code>: <code>String</code> — the key to be wrapped in the syntax format</p>
+</li>
+<li>
+<p><code>return</code>: a formatted string containing the given key</p>
+</li>
+</ul>
+<figure data-rehype-pretty-code-figure=""><pre style="background-color:#24292e;color:#e1e4e8" tabindex="0" data-language="java" data-theme="github-dark"><code data-language="java" data-theme="github-dark" style="display:grid"><span data-line=""><span style="color:#B392F0">getKeySyntaxString</span><span style="color:#E1E4E8">(String key)</span></span></code></pre></figure>
+<h3 id="addintendation" class="heading heading-h3"><a aria-hidden="true" tabindex="-1" href="#addintendation"><span class="icon icon-link"></span></a>addIntendation</h3>
+<p>Adds tab-based indentation to each line of the given code string.</p>
+<p>The first line is kept as-is, and all subsequent lines are prefixed with the specified
+number of tab characters. Read <a name="#getIntendation">getIntendation</a> to know why intendation is nog applied
+to first line.</p>
+<ul>
+<li>
+<p><code>code</code>: <code>String</code> — the multi-line code string to format</p>
+</li>
+<li>
+<p><code>intendation</code>: <code>int</code> — the number of tab characters to prepend to each line (except the first)</p>
+</li>
+<li>
+<p><code>return</code>: the indented code string</p>
+</li>
+</ul>
+<figure data-rehype-pretty-code-figure=""><pre style="background-color:#24292e;color:#e1e4e8" tabindex="0" data-language="java" data-theme="github-dark"><code data-language="java" data-theme="github-dark" style="display:grid"><span data-line=""><span style="color:#B392F0">addIntendation</span><span style="color:#E1E4E8">(String code, </span><span style="color:#F97583">int</span><span style="color:#E1E4E8"> intendation)</span></span></code></pre></figure>
+<h3 id="getintendation" class="heading heading-h3"><a aria-hidden="true" tabindex="-1" href="#getintendation"><span class="icon icon-link"></span></a>getIntendation</h3>
+<p>Calculates the indentation (leading space count) of the first line in the given code that
+contains the specified item.</p>
+<ul>
+<li>
+<p><code>codeSyntax</code>: <code>String</code> — the full code block to search through</p>
+</li>
+<li>
+<p><code>item</code>: <code>String</code> — the string to locate in the code</p>
+</li>
+<li>
+<p><code>return</code>: the number of leading spaces (indentation level) before the item, or <code>0</code> if the
+item is not found</p>
+</li>
+</ul>
+<figure data-rehype-pretty-code-figure=""><pre style="background-color:#24292e;color:#e1e4e8" tabindex="0" data-language="java" data-theme="github-dark"><code data-language="java" data-theme="github-dark" style="display:grid"><span data-line=""><span style="color:#B392F0">getIntendation</span><span style="color:#E1E4E8">(String codeSyntax, String item)</span></span></code></pre></figure>
