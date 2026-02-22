@@ -3,6 +3,7 @@ import HeroSection from "./components/HeroSection"
 import FeaturesSection from "./components/FeaturesSection"
 import Footer from "./components/Footer"
 import Contribute from "./components/Contribute"
+import ContributorsList from "./components/ContributorsList"
 import Discord from "./components/Discord"
 import "../../theme.css"
 import { Box } from "@mui/material";
@@ -12,12 +13,14 @@ export default function Home() {
     <div className="light" style={{ background: "linear-gradient(to right, #f8f9ff, #ffffff)" }}>
       <HeroSection/>
       <FeaturesSection/>
+      <ContributorsList
+        owner="Innovative-CST"
+        repo="BlockIDLE" />
       <Box
         sx={{
           display: "grid",
           gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
           gap: "24px",
-          padding: "40px 20px",
           maxWidth: "1200px",
           margin: "auto",
         }}

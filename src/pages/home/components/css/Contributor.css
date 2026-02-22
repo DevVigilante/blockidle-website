@@ -1,0 +1,25 @@
+.contributors-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 1rem;
+  padding: 1rem;
+}
+
+.contributor-card {
+  text-align: center;
+  border: 1px solid #eee;
+  padding: 0.8rem;
+  border-radius: 8px;
+  box-shadow: 0 8px 10px rgba(0, 0, 0, 0.05);
+  background: #fff;
+}
+
+.feature-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 15px rgba(0, 0, 0, 0.1);
+}
+
+
+.contributor-avatar {
+  border-radius: 50%;
+}
