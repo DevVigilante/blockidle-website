@@ -1,6 +1,7 @@
 import { Box, Button, Typography, Container } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import "../../../theme.css"
+import OpenSourceImg from "../../../../public/assets/undraw_open-source_g069.svg";
 
 export default function Contribute() {
   const navigate = useNavigate();
@@ -9,23 +10,36 @@ export default function Contribute() {
     <Container maxWidth="md">
       <Box
         sx={{
-          margin: "2em 0",
           display: "flex",
           flexDirection: "column",
+          justifyContent: "center",
+          alignItem: "center"
         }}
       >
-        <Typography variant="h4" gutterBottom sx={{ fontWeight: 700 }}>
+        <Typography variant="h5" gutterBottom sx={{ fontWeight: 700 }}>
           Open Source
         </Typography>
+        
+        <Box
+          component="img"
+          src={OpenSourceImg}
+          alt="Open Source Illustration"
+          sx={{
+            width: "100%",
+            maxWidth: 400,
+            mb: 3,
+            filter: "drop-shadow(0 15px 30px rgba(0,0,0,0.15))"
+          }}
+        />
 
-        <Typography sx={{ mb: 4, color: "#555"}}>
-          Block IDLE is proudly open-source and powered by a open source passionate developer(s).
+        <Typography sx={{ mb: 4, color: "#555" }}>
+          Block IDLE is proudly open-source and maintained by passionate developers.
           <br /><br />
           Explore the source code on GitHub, contribute new ideas, report issues,
-          improve documentation, or help shape the future of the project.
+          improve documentation, and help shape the future of the platform.
           <br /><br />
-          Together, we can build a powerful, flexible, and developer-friendly
-          platform that makes app creation smarter and more accessible for everyone.
+          Together, we can build a powerful and developer-friendly ecosystem
+          that makes app creation smarter and more accessible.
         </Typography>
         <Container
           sx={{

@@ -8,17 +8,17 @@
 }
 
 .feature-card {
-  background: #f3f5f9;
+  background: #ffffff;
   border-radius: 20px;
   padding: 30px 20px;
   text-align: center;
   transition: all 0.3s ease;
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 8px 10px rgba(0, 0, 0, 0.05);
 }
 
 .feature-card:hover {
   transform: translateY(-6px);
-  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 12px 15px rgba(0, 0, 0, 0.1);
 }
 
 .feature-image-wrapper {

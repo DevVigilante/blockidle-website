@@ -5,15 +5,27 @@ import Footer from "./components/Footer"
 import Contribute from "./components/Contribute"
 import Discord from "./components/Discord"
 import "../../theme.css"
+import { Box } from "@mui/material";
 
 export default function Home() {
   return (
     <div className="light" style={{ background: "linear-gradient(to right, #f8f9ff, #ffffff)" }}>
       <HeroSection/>
       <FeaturesSection/>
-      <Contribute/>
-      <Discord/>
-      <Api/>
+      <Box
+        sx={{
+          display: "grid",
+          gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
+          gap: "24px",
+          padding: "40px 20px",
+          maxWidth: "1200px",
+          margin: "auto",
+        }}
+      >
+        <Contribute/>
+        <Discord/>
+        <Api/>
+      </Box>
       <Footer/>
     </div>
   );

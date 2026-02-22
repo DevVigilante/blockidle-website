@@ -5,6 +5,12 @@ import "./css/Feature.css";
 export default function FeaturesSection() {
   const features = [
     {
+      "image": "assets/undraw_building-blocks_h5jb.png",
+      title: "Block Based Programming",
+      description:
+        "No knowledge of code required, just writing of logic with blocks.",
+    },
+    {
       image: "/assets/1771688992717.jpg",
       title: "Gradle",
       description:
