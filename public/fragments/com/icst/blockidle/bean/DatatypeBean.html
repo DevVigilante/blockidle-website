@@ -59,13 +59,13 @@ through exptension module.</p>
 <h3 id="getsupertypes" class="heading heading-h3"><a aria-hidden="true" tabindex="-1" href="#getsupertypes"><span class="icon icon-link"></span></a>getSuperTypes</h3>
 <p>Returns the list of super types for this data type.</p>
 <ul>
-<li><code>return</code>: a list of <span>DatatypeBean</span> representing the super types</li>
+<li><code>return</code>: a list of <a href="/docs/com/icst/blockidle/bean/DatatypeBean.html">DatatypeBean</a> representing the super types</li>
 </ul>
 <figure data-rehype-pretty-code-figure=""><pre style="background-color:#24292e;color:#e1e4e8" tabindex="0" data-language="java" data-theme="github-dark"><code data-language="java" data-theme="github-dark" style="display:grid"><span data-line=""><span style="color:#B392F0">getSuperTypes</span><span style="color:#E1E4E8">()</span></span></code></pre></figure>
 <h3 id="addsupertype" class="heading heading-h3"><a aria-hidden="true" tabindex="-1" href="#addsupertype"><span class="icon icon-link"></span></a>addSuperType</h3>
 <p>Adds a new super type to the list of this data type\u2019s super types.</p>
 <ul>
-<li><code>superType</code>: <code>DatatypeBean</code> — the <span>DatatypeBean</span> representing the super type to add</li>
+<li><code>superType</code>: <code>DatatypeBean</code> — the <a href="/docs/com/icst/blockidle/bean/DatatypeBean.html">DatatypeBean</a> representing the super type to add</li>
 </ul>
 <figure data-rehype-pretty-code-figure=""><pre style="background-color:#24292e;color:#e1e4e8" tabindex="0" data-language="java" data-theme="github-dark"><code data-language="java" data-theme="github-dark" style="display:grid"><span data-line=""><span style="color:#B392F0">addSuperType</span><span style="color:#E1E4E8">(DatatypeBean superType)</span></span></code></pre></figure>
 <h3 id="getclassname" class="heading heading-h3"><a aria-hidden="true" tabindex="-1" href="#getclassname"><span class="icon icon-link"></span></a>getClassName</h3>
@@ -113,7 +113,7 @@ types (recursively).</p>
 <figure data-rehype-pretty-code-figure=""><pre style="background-color:#24292e;color:#e1e4e8" tabindex="0" data-language="java" data-theme="github-dark"><code data-language="java" data-theme="github-dark" style="display:grid"><span data-line=""><span style="color:#B392F0">hashCode</span><span style="color:#E1E4E8">()</span></span></code></pre></figure>
 <h3 id="clonebean" class="heading heading-h3"><a aria-hidden="true" tabindex="-1" href="#clonebean"><span class="icon icon-link"></span></a>cloneBean</h3>
 <p>Creates a deep clone of this DatatypeBean, including all of its super DatatypeBean.</p>
-<p>Uses <span>BeanArrayCloneUtils#clone(java.util.ArrayList)</span> to clone the super types list.</p>
+<p>Uses <a href="/docs/com/icst/blockidle/bean/utils/BeanArrayCloneUtils.html#clone(java.util.ArrayList)">BeanArrayCloneUtils#clone(java.util.ArrayList)</a> to clone the super types list.</p>
 <ul>
 <li><code>return</code>: a new instance that is a deep copy of this object</li>
 </ul>
@@ -121,7 +121,7 @@ types (recursively).</p>
 <h3 id="getinheritanceasstring" class="heading heading-h3"><a aria-hidden="true" tabindex="-1" href="#getinheritanceasstring"><span class="icon icon-link"></span></a>getInheritanceAsString</h3>
 <figure data-rehype-pretty-code-figure=""><pre style="background-color:#24292e;color:#e1e4e8" tabindex="0" data-language="java" data-theme="github-dark"><code data-language="java" data-theme="github-dark" style="display:grid"><span data-line=""><span style="color:#B392F0">getInheritanceAsString</span><span style="color:#E1E4E8">(DatatypeBean datatype, </span><span style="color:#F97583">int</span><span style="color:#E1E4E8"> level, DatatypeBean</span><span style="color:#F97583">&gt;</span><span style="color:#E1E4E8"> visited, StringBuilder strBuilder)</span></span></code></pre></figure>
 <h3 id="tostring" class="heading heading-h3"><a aria-hidden="true" tabindex="-1" href="#tostring"><span class="icon icon-link"></span></a>toString</h3>
-<p>Returns a formatted string representation of this <span>DatatypeBean</span>&#x27;s inheritance
+<p>Returns a formatted string representation of this <a href="/docs/com/icst/blockidle/bean/DatatypeBean.html">DatatypeBean</a>&#x27;s inheritance
 hierarchy.</p>
 <p>This method provides a hierarchical view of the current data type and its super types,
 formatted with indentation to reflect the depth of inheritance. It uses tabs to indent each

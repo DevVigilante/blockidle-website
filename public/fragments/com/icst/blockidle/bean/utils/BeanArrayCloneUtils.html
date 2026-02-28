@@ -30,7 +30,7 @@ h3 {
 </style>
 <h1 id="beanarraycloneutils" class="heading heading-h1"><a aria-hidden="true" tabindex="-1" href="#beanarraycloneutils"><span class="icon icon-link"></span></a>BeanArrayCloneUtils</h1>
 <p>A utility class providing the deep clone functionality for followings:</p>
-<ul><li>ArrayList of bean that implements <span>CloneableBean</span></li><li>Array of <span>DatatypeBean</span>.</li></ul>
+<ul><li>ArrayList of bean that implements <span>CloneableBean</span></li><li>Array of <a href="/docs/com/icst/blockidle/bean/DatatypeBean.html">DatatypeBean</a>.</li></ul>
 <h2 id="methods" class="heading heading-h2"><a aria-hidden="true" tabindex="-1" href="#methods"><span class="icon icon-link"></span></a>Methods</h2>
 <h3 id="clone" class="heading heading-h3"><a aria-hidden="true" tabindex="-1" href="#clone"><span class="icon icon-link"></span></a>clone</h3>
 <p>Creates a deep copy of the given <span>ArrayList</span> containing <span>CloneableBean</span>
@@ -51,13 +51,13 @@ exception.</p>
 </ul>
 <figure data-rehype-pretty-code-figure=""><pre style="background-color:#24292e;color:#e1e4e8" tabindex="0" data-language="java" data-theme="github-dark"><code data-language="java" data-theme="github-dark" style="display:grid"><span data-line=""><span style="color:#B392F0">clone</span><span style="color:#E1E4E8">(ArrayList</span><span style="color:#F97583">&lt;</span><span style="color:#E1E4E8">T</span><span style="color:#F97583">&gt;</span><span style="color:#E1E4E8"> beans)</span></span></code></pre></figure>
 <h3 id="clonedatatypebeanarray" class="heading heading-h3"><a aria-hidden="true" tabindex="-1" href="#clonedatatypebeanarray"><span class="icon icon-link"></span></a>cloneDatatypeBeanArray</h3>
-<p>Creates a deep copy of the given array of <span>DatatypeBean</span> instances.</p>
+<p>Creates a deep copy of the given array of <a href="/docs/com/icst/blockidle/bean/DatatypeBean.html">DatatypeBean</a> instances.</p>
 <p>This method is designed to handle corner cases gracefully, including <code>null</code> input.
 If the input array is <code>null</code>, the method returns <code>null</code> instead of throwing an
 exception.</p>
 <ul>
 <li>
-<p><code>datatypeBean</code>: <code>DatatypeBean[]</code> — the array of <span>DatatypeBean</span> instances to clone; may be <code>null</code></p>
+<p><code>datatypeBean</code>: <code>DatatypeBean[]</code> — the array of <a href="/docs/com/icst/blockidle/bean/DatatypeBean.html">DatatypeBean</a> instances to clone; may be <code>null</code></p>
 </li>
 <li>
 <p><code>return</code>: a new array containing cloned instances of the input beans, or <code>null</code> if the

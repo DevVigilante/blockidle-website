@@ -1,20 +1,22 @@
 import { jsx as _jsx } from "react/jsx-runtime";
 
-export default function LinkRef({ name, pages }) {
+export default function LinkRef({ name, pagesUrlData }) {
   if (!name) return null;
 
+  // Hash-only link
   if (name.startsWith("#")) {
     const hash = name.substring(1);
     return _jsx("a", {
-      name: `#${hash}`,
+      href: `#${hash}`,
       children: hash
     });
   }
 
   const [className, hash] = name.split("#");
 
-  const match = pages?.find(p =>
-    p.endsWith(`${className}.html`)
+
+  const match = pagesUrlData?.find(p =>
+    p.class.replace(".md", "") === className
   );
 
   if (!match) {
@@ -23,10 +25,10 @@ export default function LinkRef({ name, pages }) {
     });
   }
 
-  const url = "/" + match + (hash ? `#${hash}` : "");
+  const url = "/" + match.path + (hash ? `#${hash}` : "");
 
   return _jsx("a", {
-    name: url,
+    href: url,
     children: name
   });
 }

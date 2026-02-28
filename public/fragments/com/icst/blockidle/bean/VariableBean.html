@@ -34,9 +34,9 @@ h3 {
 and type (e.g., a regular variable or a layout-related variable like view binding).
 This class implements <span>CloneableBean</span> for deep copying and <span>Serializable</span> for object serialization.</p>
 <p>Access Modifiers:</p>
-<ul><li><a name="#ACCESS_MODIFIER_PRIVATE">ACCESS_MODIFIER_PRIVATE</a> \u2013 <code>private</code></li><li><a name="#ACCESS_MODIFIER_PROTECTED">ACCESS_MODIFIER_PROTECTED</a> \u2013 <code>protected</code></li><li><a name="#ACCESS_MODIFIER_PUBLIC">ACCESS_MODIFIER_PUBLIC</a> \u2013 <code>public</code></li></ul>
+<ul><li><a href="#ACCESS_MODIFIER_PRIVATE">ACCESS_MODIFIER_PRIVATE</a> \u2013 <code>private</code></li><li><a href="#ACCESS_MODIFIER_PROTECTED">ACCESS_MODIFIER_PROTECTED</a> \u2013 <code>protected</code></li><li><a href="#ACCESS_MODIFIER_PUBLIC">ACCESS_MODIFIER_PUBLIC</a> \u2013 <code>public</code></li></ul>
 <p>Variable Types:</p>
-<ul><li><a name="#VARIABLE">VARIABLE</a> \u2013 Standard variable</li><li><a name="#LAYOUT">LAYOUT</a> \u2013 Layout-based variable, e.g., view binding</li></ul>
+<ul><li><a href="#VARIABLE">VARIABLE</a> \u2013 Standard variable</li><li><a href="#LAYOUT">LAYOUT</a> \u2013 Layout-based variable, e.g., view binding</li></ul>
 <h2 id="methods" class="heading heading-h2"><a aria-hidden="true" tabindex="-1" href="#methods"><span class="icon icon-link"></span></a>Methods</h2>
 <h3 id="getallmetadata" class="heading heading-h3"><a aria-hidden="true" tabindex="-1" href="#getallmetadata"><span class="icon icon-link"></span></a>getAllMetadata</h3>
 <p>Retrieves all metadata instances of the specified type from both <code>requiredVariables</code>
@@ -49,7 +49,7 @@ all relevant data sources within the object.</p>
 to avoid <span>NullPointerException</span>, covering edge cases gracefully.</p>
 <ul>
 <li>
-<p><code>T</code>: <code>Unknown</code> — the type of metadata to retrieve; must extend <span>BeanMetadata</span></p>
+<p><code>T</code>: <code>Unknown</code> — the type of metadata to retrieve; must extend <a href="/docs/com/icst/blockidle/bean/BeanMetadata.html">BeanMetadata</a></p>
 </li>
 <li>
 <p><code>classType</code>: <code>Class&lt;T&gt;</code> — the class object representing the metadata type to search for</p>
@@ -65,7 +65,7 @@ to avoid <span>NullPointerException</span>, covering edge cases gracefully.</p>
 to avoid shared references, thus preventing unintended side effects when modifying the cloned
 instance. Immutable or null-safe copies are made where applicable.</p>
 <p>Specifically:</p>
-<ul><li>Strings are copied using <code>new String(...)</code> to ensure new references.</li><li>Booleans and Integers are boxed from primitives to ensure clarity and immutability.</li><li><span>DatatypeBean</span> is cloned recursively using its <code>cloneBean()</code> method.</li><li><code>requiredVariables</code> are deeply cloned, with each <code>VariableBean</code> copied
+<ul><li>Strings are copied using <code>new String(...)</code> to ensure new references.</li><li>Booleans and Integers are boxed from primitives to ensure clarity and immutability.</li><li><a href="/docs/com/icst/blockidle/bean/DatatypeBean.html">DatatypeBean</a> is cloned recursively using its <code>cloneBean()</code> method.</li><li><code>requiredVariables</code> are deeply cloned, with each <code>VariableBean</code> copied
 individually.</li><li><code>icon</code> byte array is copied using <code>System.arraycopy</code>.</li><li><code>variableTitles</code>, <code>variableValues</code>, and <code>inputType</code> are
 shallow-copied using <code>new HashMap&lt;&gt;(...)</code>.</li><li><code>beanManifest</code> is assigned directly (TODO indicates deep cloning is intended in
 the future).</li></ul>
@@ -81,7 +81,7 @@ final), data type, variable name (or non-fixed formatted name), and optionally, 
 initializer expression. It uses values from <code>variableValues</code> to replace template keys
 in the initializer expression.</p>
 <p>If <code>requiredVariables</code> are present, this method recursively appends their code
-declarations using the overloaded <a name="#getDefCode(HashMap, VariableBean)">getDefCode(HashMap, VariableBean)</a> method.</p>
+declarations using the overloaded <a href="#getDefCode(HashMap, VariableBean)">getDefCode(HashMap, VariableBean)</a> method.</p>
 <p>Template syntax keys such as <code>%\{variableName</code>} are replaced using the <code>CodeFormatterUtils.getKeySyntaxString(String)</code> utility.</p>
 <ul>
 <li><code>return</code>: the formatted Java code for the variable declaration(s)</li>
@@ -92,7 +92,7 @@ declarations using the overloaded <a name="#getDefCode(HashMap, VariableBean)">g
 based on current modifiers, type, and name, and replaces any template syntax in the
 initializer using the provided variable values.</p>
 <p>This method is internally used for generating code for nested or required variables by the
-main <a name="#getDefCode()">getDefCode()</a> method.</p>
+main <a href="#getDefCode()">getDefCode()</a> method.</p>
 <p>Key behaviors include:</p>
 <ul><li>Modifier resolution via <code>getAccessModifier()</code>.</li><li>Uses either <code>variableName</code> or a formatted <code>nonFixedVariableName</code>.</li><li>If the variable is globally initialized and has initializer code, it will substitute
 variable placeholders using <code>variableValues</code>.</li><li>Returns a complete declaration ending in a semicolon.</li></ul>
@@ -136,13 +136,13 @@ unused)</p>
 <h3 id="getvariabledatatype" class="heading heading-h3"><a aria-hidden="true" tabindex="-1" href="#getvariabledatatype"><span class="icon icon-link"></span></a>getVariableDataType</h3>
 <p>Returns the data type of the variable.</p>
 <ul>
-<li><code>return</code>: the <span>DatatypeBean</span> representing the variable&#x27;s type</li>
+<li><code>return</code>: the <a href="/docs/com/icst/blockidle/bean/DatatypeBean.html">DatatypeBean</a> representing the variable&#x27;s type</li>
 </ul>
 <figure data-rehype-pretty-code-figure=""><pre style="background-color:#24292e;color:#e1e4e8" tabindex="0" data-language="java" data-theme="github-dark"><code data-language="java" data-theme="github-dark" style="display:grid"><span data-line=""><span style="color:#B392F0">getVariableDataType</span><span style="color:#E1E4E8">()</span></span></code></pre></figure>
 <h3 id="setvariabledatatype" class="heading heading-h3"><a aria-hidden="true" tabindex="-1" href="#setvariabledatatype"><span class="icon icon-link"></span></a>setVariableDataType</h3>
 <p>Sets the data type of the variable.</p>
 <ul>
-<li><code>variableDataType</code>: <code>DatatypeBean</code> — the <span>DatatypeBean</span> to set</li>
+<li><code>variableDataType</code>: <code>DatatypeBean</code> — the <a href="/docs/com/icst/blockidle/bean/DatatypeBean.html">DatatypeBean</a> to set</li>
 </ul>
 <figure data-rehype-pretty-code-figure=""><pre style="background-color:#24292e;color:#e1e4e8" tabindex="0" data-language="java" data-theme="github-dark"><code data-language="java" data-theme="github-dark" style="display:grid"><span data-line=""><span style="color:#B392F0">setVariableDataType</span><span style="color:#E1E4E8">(DatatypeBean variableDataType)</span></span></code></pre></figure>
 <h3 id="getvariablename" class="heading heading-h3"><a aria-hidden="true" tabindex="-1" href="#getvariablename"><span class="icon icon-link"></span></a>getVariableName</h3>
@@ -319,13 +319,13 @@ unused)</p>
 </ul>
 <figure data-rehype-pretty-code-figure=""><pre style="background-color:#24292e;color:#e1e4e8" tabindex="0" data-language="java" data-theme="github-dark"><code data-language="java" data-theme="github-dark" style="display:grid"><span data-line=""><span style="color:#B392F0">setApplyColorFilter</span><span style="color:#E1E4E8">(</span><span style="color:#F97583">boolean</span><span style="color:#E1E4E8"> applyColorFilter)</span></span></code></pre></figure>
 <h3 id="getbeanmanifest" class="heading heading-h3"><a aria-hidden="true" tabindex="-1" href="#getbeanmanifest"><span class="icon icon-link"></span></a>getBeanManifest</h3>
-<p>Returns the <span>BeanManifest</span> that holds additional metadata about this variable.</p>
+<p>Returns the <a href="/docs/com/icst/blockidle/bean/BeanManifest.html">BeanManifest</a> that holds additional metadata about this variable.</p>
 <ul>
 <li><code>return</code>: the associated <code>BeanManifest</code>, or <code>null</code> if not set</li>
 </ul>
 <figure data-rehype-pretty-code-figure=""><pre style="background-color:#24292e;color:#e1e4e8" tabindex="0" data-language="java" data-theme="github-dark"><code data-language="java" data-theme="github-dark" style="display:grid"><span data-line=""><span style="color:#B392F0">getBeanManifest</span><span style="color:#E1E4E8">()</span></span></code></pre></figure>
 <h3 id="setbeanmanifest" class="heading heading-h3"><a aria-hidden="true" tabindex="-1" href="#setbeanmanifest"><span class="icon icon-link"></span></a>setBeanManifest</h3>
-<p>Sets the <span>BeanManifest</span> containing metadata for this variable.</p>
+<p>Sets the <a href="/docs/com/icst/blockidle/bean/BeanManifest.html">BeanManifest</a> containing metadata for this variable.</p>
 <ul>
 <li><code>beanManifest</code>: <code>BeanManifest</code> — the manifest to associate with this variable</li>
 </ul>

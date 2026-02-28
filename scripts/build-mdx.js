@@ -1,5 +1,6 @@
 import fs from "fs";
 import path from "path";
+import React from "react";
 import matter from "gray-matter";
 import { compile, run } from "@mdx-js/mdx";
 import * as runtime from "react/jsx-runtime";
@@ -14,6 +15,7 @@ import LinkRef from "./LinkRef.js"
 const INPUT_DIR = "../beans/basebeans/build/markdown-docs";
 const OUTPUT_DIR = "./public";
 const FRAG_DIR = path.join(OUTPUT_DIR, "fragments");
+const pagesUrlData = []
 
 //  rehype plugin 
 function rehypeInjectCustomClasses() {
@@ -66,7 +68,11 @@ async function generateFragment(filePath) {
   const htmlContent = renderToStaticMarkup(
     MDXContent({
       components: {
-        LinkRef
+        LinkRef: (props) =>
+        React.createElement(LinkRef, {
+          ...props,
+          pagesUrlData
+        })
       }
     })
   );
@@ -125,6 +131,24 @@ function generatePagesJson(files) {
   );
 }
 
+function pageLinkResolver() {
+  const localFiles = getAllMarkdownFiles(INPUT_DIR);
+  for (let file of localFiles) {
+    let parts = file.split("/");
+    let className = parts[parts.length - 1];
+    
+    let relativePath = path.relative(INPUT_DIR, file);
+    let classDocPath = path.join(
+      "docs",
+      relativePath.replace(".md", ".html")
+    );
+
+    pagesUrlData.push({
+      "class": className,
+      "path": classDocPath
+    });
+  }
+}
 
 //  main build function 
 async function build() {
@@ -141,5 +165,5 @@ async function build() {
 
   console.log("Static docs site generated in 'dist/'!");
 }
-
+pageLinkResolver();
 build();
