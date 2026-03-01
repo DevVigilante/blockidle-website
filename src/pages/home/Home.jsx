@@ -13,9 +13,6 @@ export default function Home() {
     <div className="light" style={{ background: "linear-gradient(to right, #f8f9ff, #ffffff)" }}>
       <HeroSection/>
       <FeaturesSection/>
-      <ContributorsList
-        owner="Innovative-CST"
-        repo="BlockIDLE" />
       <Box
         sx={{
           display: "grid",
